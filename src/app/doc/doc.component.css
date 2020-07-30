@@ -1,0 +1,20 @@
+.title{
+    text-align: center;
+    background-color: lightgray;
+}
+
+.rightPosition{
+    float: right;
+}
+
+.handPointer{
+    cursor: pointer;
+}
+
+a :active{
+    color: blue;
+}
+/* 
+.changedStyle{
+    color: red;
+} */

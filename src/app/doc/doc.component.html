@@ -1,0 +1,107 @@
+<div class="container-fluid">
+    <div>
+        <h3 class="jumbotron jumbotron-fluid title">
+            Doctor's Sheet
+        </h3>
+    </div>
+
+    <div>
+        <!-- Add Doctor Details Form  -->
+        <form #addDoctorsForm="ngForm">
+            <div class="row">
+                <div class="col">
+                    <!-- Input Doctor's Name -->
+                    <input class="form-control" type="text" name="dcName" placeholder="Doctor Name" 
+                     [(ngModel)]="docName" #dcName> 
+                </div>
+
+                <div class="col offset-2">
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-dark" type="button" (click)="onAddFirst(dcName)">Add First</button>                    
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn btn-dark" (click)="onAddLast(dcName)">Add Last</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <br>
+
+    <div>
+        <!-- Grid of Doctor's List -->
+        <form #doctorsListForm="ngForm">
+            <!-- List Header -->
+            <div class="row">
+                <div class="col-2">
+                    <a class="handPointer" (click)="sortById()" #sno><h4>S.No<span class="material-icons">arrow_downward</span></h4></a>
+                </div>
+                <div class="col-4" [ngClass]="nameClass">
+                    <a class="handPointer" (click)="sortByName()" #dcname><h4>Doctor Name<span class="material-icons">arrow_downward</span></h4></a>
+                </div>
+                <div class="col-2">
+                    <h4>Sort</h4>
+                </div>
+                <div class="col">
+                    <h4>Operations</h4>
+                </div>
+            </div>
+
+            <!-- List Data -->
+            <div class="row" style="padding: 1em;" *ngFor="let doc of doctors; let i = index">
+                <!-- S.No -->
+                <div class="col-2">
+                    <span *ngIf="!doctors[i].isSelected; else changeId">{{doc.doctorId}}</span>
+                    <ng-template #changeId>
+                        <input type="text" class="form-control" 
+                        #changeDocId value="{{doctors[i].doctorId}}" name="changeDocId" #ngModel> 
+                    </ng-template>
+                </div>
+                <!-- Doctor's Name -->
+                <div class="col-4">
+                    <span *ngIf="!doctors[i].isSelected; else changeName">{{doc.doctorName}}</span>
+                    <ng-template #changeName>
+                        <input type="text" class="form-control" 
+                        #changeDocName value="{{doctors[i].doctorName}}" name="changeDocName" #ngModel>
+                    </ng-template>
+                </div>
+                <!-- Sort -->
+                <div class="col-2">
+                    <div class="row">
+                        <div class="col">
+                            <a class="handPointer" (click)="swapDown(i)"><span class="material-icons">arrow_downward</span></a>
+                        </div>
+                        <div class="col">
+                            <a class="handPointer" (click)="swapUp(i)"><span class="material-icons">arrow_upward</span></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Operations -->
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-info form-control" id="edit_{{i}}" type="button" (click)="onStateChange(i)">
+                                Edit
+                            </button>
+                                <!-- <span class="material-icons">edit</span> -->
+                        </div>
+                        <div class="col">
+                            <button [disabled]="doctors[i].isEnabled" id="saveBtn_{{i}}" class="btn btn-success form-control" type="button" (click)="onUpdateRecord(i)">
+                                Save & Sort
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-danger form-control" id="delBtn_{{i}}" type="button" (click)="onDeleteRecord(i)">
+                                Delete
+                            </button>
+                                <!-- <span class="material-icons">delete</span> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
